@@ -1,0 +1,8 @@
+wevoiceenv
+.idea
+.DS_Store
+*.pyc
+/static
+media
+.env
+db
