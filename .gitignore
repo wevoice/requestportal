@@ -6,3 +6,4 @@ requestvenv
 media
 .env
 db
+requirements.txt
