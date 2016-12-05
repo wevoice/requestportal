@@ -2,7 +2,7 @@ from django.contrib import admin
 from . import models
 
 from import_export.resources import ModelResource
-from import_export.admin import ImportExportMixin, ImportMixin
+from import_export.admin import ImportExportMixin, ImportMixin, ImportExportActionModelAdmin
 from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 from import_export import fields
 
@@ -38,6 +38,7 @@ admin.site.register(models.Language, LanguageAdmin)
 
 
 class RequestResource(ModelResource):
+
     client = fields.Field(
         column_name='client',
         attribute='client',
@@ -76,7 +77,7 @@ class RequestResource(ModelResource):
         return self.fields['name'].clean(row) == ''
 
 
-class RequestAdmin(ImportExportMixin, admin.ModelAdmin):
+class RequestAdmin(ImportExportActionModelAdmin):
     list_filter = ('client',)
     inlines = [VideoAssetInline, AudioAssetInline, DTPAssetInline, GraphicAssetInline]
     list_display = ('name', 'client', 'new_account', 'tms_or_cat_tool', 'created_date', 'requested_due_date')
