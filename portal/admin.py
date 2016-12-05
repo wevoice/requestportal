@@ -28,12 +28,12 @@ class GraphicAssetInline(admin.StackedInline):
 
 
 class ClientAdmin(ImportMixin, admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('id', 'name',)
 admin.site.register(models.Client, ClientAdmin)
 
 
 class LanguageAdmin(ImportMixin, admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('id', 'name',)
 admin.site.register(models.Language, LanguageAdmin)
 
 
@@ -78,8 +78,9 @@ class RequestResource(ModelResource):
 
 
 class RequestAdmin(ImportExportActionModelAdmin):
-    list_filter = ('client',)
+    list_filter = ('client', 'status')
     inlines = [VideoAssetInline, AudioAssetInline, DTPAssetInline, GraphicAssetInline]
-    list_display = ('name', 'client', 'new_account', 'tms_or_cat_tool', 'created_date', 'requested_due_date')
+    list_display = ('id', 'name', 'client', 'status', 'tms_or_cat_tool', 'created_date', 'requested_due_date',
+                    'last_updated')
     resource_class = RequestResource
 admin.site.register(models.Request, RequestAdmin)
