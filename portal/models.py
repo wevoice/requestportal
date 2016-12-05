@@ -145,6 +145,7 @@ class Request(models.Model):
     )
 
     NUMBER_CHOICES = (
+        ("None", "None"),
         ("One", "One"),
         ("Two", "Two"),
         ("Three", "Three")
@@ -180,11 +181,9 @@ class Request(models.Model):
                                        verbose_name="TMS or CAT tool used")
     tms_login_info = models.CharField(max_length=256, blank=True, null=True, verbose_name="TMS login info")
     path_to_source = models.CharField(max_length=128, blank=True, null=True)
-    source_language = models.ForeignKey("Language", related_name="sourcelanguage", default=1, blank=True, null=True)
+    source_language = models.ForeignKey("Language", related_name="sourcelanguage", default="en-US", blank=True, null=True)
     target_languages = models.ManyToManyField("Language")
     sla_metrics_path = models.CharField(max_length=128, blank=True, null=True, verbose_name="SLA metrics path")
-    include_qa_testing = models.CharField(max_length=16, choices=YES_NO_CHOICES, blank=True, null=True,
-                                          verbose_name="Include QA testing")
     rounds_of_testing = models.CharField(max_length=8, choices=NUMBER_CHOICES, blank=True, null=True)
     project_and_filetype_info = models.TextField(blank=True, null=True)
     client_instructions = models.TextField(blank=True, null=True)

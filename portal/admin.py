@@ -64,12 +64,12 @@ class RequestResource(ModelResource):
             'requested_due_date': {'format': '%d.%m.%Y'}
         }
 
-        fields = ('id', 'name', 'client', 'new_account', 'tms_or_cat_tool', 'path_to_source', 'source_language',
-                  'languages', 'include_qa_testing', 'rounds_of_testing', 'project_and_filetype_info',
+        fields = ('id', 'name', 'client', 'new_account', 'tms_or_cat_tool', 'tms_login_info', 'path_to_source',
+                  'source_language', 'languages', 'rounds_of_testing', 'project_and_filetype_info',
                   'client_instructions', 'created_date', 'requested_due_date', 'status')
 
-        export_order = ('id', 'name', 'client', 'new_account', 'tms_or_cat_tool', 'path_to_source', 'source_language',
-                        'languages', 'include_qa_testing', 'rounds_of_testing', 'project_and_filetype_info',
+        export_order = ('id', 'name', 'client', 'new_account', 'tms_or_cat_tool', 'tms_login_info', 'path_to_source',
+                        'source_language', 'languages', 'rounds_of_testing', 'project_and_filetype_info',
                         'client_instructions', 'created_date', 'requested_due_date', 'status')
 
     def for_delete(self, row, instance):
