@@ -1,8 +1,8 @@
 from django.contrib import admin
 from . import models
 
-from import_export.resources import ModelResource
-from import_export.admin import ImportExportMixin, ImportMixin, ImportExportActionModelAdmin
+from import_export import resources
+from import_export.admin import ImportMixin, ImportExportActionModelAdmin
 from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 from import_export import fields
 
@@ -37,7 +37,7 @@ class LanguageAdmin(ImportMixin, admin.ModelAdmin):
 admin.site.register(models.Language, LanguageAdmin)
 
 
-class RequestResource(ModelResource):
+class RequestResource(resources.ModelResource):
 
     client = fields.Field(
         column_name='client',
@@ -59,6 +59,8 @@ class RequestResource(ModelResource):
 
     class Meta:
         model = models.Request
+        skip_unchanged = True
+        report_skipped = False
 
         widgets = {
             'created_date': {'format': '%d.%m.%Y'},
@@ -73,8 +75,23 @@ class RequestResource(ModelResource):
                         'source_language', 'languages', 'rounds_of_testing', 'project_and_filetype_info',
                         'client_instructions', 'created_date', 'requested_due_date', 'status')
 
+        # fields = ('id', 'name', 'client')
+        # export_order = ('id', 'name', 'client')
+
     def for_delete(self, row, instance):
         return self.fields['name'].clean(row) == ''
+
+    def before_import(self, dataset, using_transactions, dry_run, **kwargs):
+        dataset = dataset
+        return dataset
+
+
+    def before_export(self, queryset, *args, **kwargs):
+        queryset = queryset.filter(client__name="Gillette")
+        return queryset
+
+    def after_export(self, queryset, data, *args, **kwargs):
+        pass
 
 
 class RequestAdmin(ImportExportActionModelAdmin):
